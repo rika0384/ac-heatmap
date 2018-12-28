@@ -10,15 +10,49 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+  <!-- cal-heatmap-->
+  <script type="text/javascript" src="https://d3js.org/d3.v3.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 </head>
 <body>
     <div class="title">AC heatmap</div>
 
-    
+    <div class="input">
+        <font>AtCoder ID:</font>
+        <input type="text" id="handle_atcoder" name="handle_atcoder">
+        <br>
+        <font>CodeForces ID:</font>
+        <input type="text" id="handle_codeforces" name="handle_codeforces">
+        <br>
+        <font>AOJ ID:</font>
+        <input type="text" id="handle_aoj" name="handle_aoj">
+        <br><br>
+    </div>
+    <div class="button">
+            <button type="submit" onclick="getData()">send</button>
+    </div>
+
+    <div class="container atcoder">
+        <div class="atcoder-title">AtCoder</div>
+        <div class="heatmap" id="atcoder-heatmap"></div>
+    </div>
+    <div class="container codeforces">
+        <div class="codeforces-title">codeforces</div>
+        <div class="heatmap" id="codeforces-heatmap"></div>
+    </div>
+    <div class="container aoj">
+        <div class="aoj-title">AOJ</div>
+        <div class="heatmap" id="aoj-heatmap"></div>
+    </div>
+
+
     <div id="footer">© 2018 All rights reserved</div>
-<script src="./main.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
