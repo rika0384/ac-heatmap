@@ -2,7 +2,48 @@ body{
   font-family: 'Courier New', sans-serif;
   font-size: 20px;
 }
-
+.title{
+    font-size: 100px;
+    text-align: center;
+    color: green;
+}
+.input{
+    width: 300px;
+    margin: auto;
+}
+.button{
+    width:100px;
+    margin: auto;
+}
+.atcoder, .codeforces, .aoj{
+    text-align: center;
+    font-size: 40px;
+    margin: 50px;
+}
+.atcoder-title, .codeforces-title, .aoj-title{
+    width: 300px;
+    margin: auto;
+}
+.container{
+    padding: 10px;
+}
+.atcoder{
+    background-color: snow;
+}
+.codeforces{
+    background-color: aliceblue;
+}
+.aoj{
+    background-color: ivory;
+}
+.cal-heatmap-container{
+    margin: auto;
+}
+.heatmap{
+    background-color: white;
+    margin: 10px;
+    padding: 10px;
+}
 #footer{
     background-color: aliceblue;
     height: 50px;
