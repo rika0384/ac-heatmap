@@ -4,24 +4,27 @@ var solved_atcoder = 0;
 var solved_aoj = 0;
 
 
+
 var now;
 
 (function(){
     'use strict';
-
+    now = new Date();
+    getAOJ();
+    getAtCoder();
+    getCodeForces();
 })();
 
 function getData(){
-    now = new Date();
     getAOJ();
     getAtCoder();
     getCodeForces();
 }
 
 function getAOJ(){
-    var handle = document.getElementById("handle_aoj").value;
+    //var handle = document.getElementById("handle_aoj").value;
     console.log(handle);
-    //var handle = "is0384er";
+    var handle = "is0384er";
     var url = "https://judgeapi.u-aizu.ac.jp/solutions/users/" + handle;
     var query = "select * from json where url = '" + url + "'";
     var yql   = "https://query.yahooapis.com/v1/public/yql?format=json&q=" + encodeURIComponent(query);
@@ -74,8 +77,8 @@ function getAOJ(){
 }
 
 function getAtCoder(){
-    var handle = document.getElementById("handle_atcoder").value;
-    //var handle = "rika0384";
+    //var handle = document.getElementById("handle_atcoder").value;
+    var handle = "rika0384";
         console.log(handle);
     solved_atcoder = 0;
     var url = "https://kenkoooo.com/atcoder/atcoder-api/results?user=" + handle;
@@ -133,8 +136,8 @@ function getAtCoder(){
 }
 
 function getCodeForces(){
-    var handle = document.getElementById("handle_codeforces").value;
-    //var handle = "rika0384";
+    //var handle = document.getElementById("handle_codeforces").value;
+    var handle = "rika0384";
         console.log(handle);
     var url = "https://codeforces.com/api/user.status?handle=" + handle;
     var query = "select * from json where url = '" + url + "'";
