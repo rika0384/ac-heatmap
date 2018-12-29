@@ -3,6 +3,7 @@ var solved_codeforces = 0;
 var solved_atcoder = 0;
 var solved_aoj = 0;
 
+var cal_aoj,cal_atcoder,cal_codeforces;
 
 
 var now;
@@ -10,9 +11,44 @@ var now;
 (function(){
     'use strict';
     now = new Date();
-    getAOJ();
-    getAtCoder();
-    getCodeForces();
+    cal_aoj = new CalHeatMap();
+    cal_aoj.init({
+        itemSelector: '#aoj-heatmap',
+        domainLabelFormat: '%Y-%m',
+        start: new Date(now.getFullYear(), now.getMonth() - 11),
+        cellSize: size,
+        range: 12,
+        domain: "month",
+        domainGutter: 5,
+        legendColors: ["#efefef", "gold"],
+        legend: [1, 3, 5]
+    });
+    cal_atcoder = new CalHeatMap();
+    cal_atcoder.init({
+        itemSelector: '#atcoder-heatmap',
+        domainLabelFormat: '%Y-%m',
+        start: new Date(now.getFullYear(), now.getMonth() - 11),
+        cellSize: size,
+        range: 12,
+        domain: "month",
+        domainGutter: 5,
+        legendColors: ["#efefef", "deeppink"],
+        legend: [1, 3, 5]
+    });
+    cal_codeforces = new CalHeatMap();
+    cal_codeforces.init({
+        itemSelector: '#codeforces-heatmap',
+        domainLabelFormat: '%Y-%m',
+        start: new Date(now.getFullYear(), now.getMonth() - 11),
+        cellSize: size,
+        range: 12,
+        domain: "month",
+        domainGutter: 5,
+        legendColors: ["#efefef", "navy"],
+        legend: [1, 3, 5]
+    });
+
+
 })();
 
 function getData(){
@@ -22,9 +58,9 @@ function getData(){
 }
 
 function getAOJ(){
-    //var handle = document.getElementById("handle_aoj").value;
+    var handle = document.getElementById("handle_aoj").value;
+    //var handle = "is0384er";
     console.log(handle);
-    var handle = "is0384er";
     var url = "https://judgeapi.u-aizu.ac.jp/solutions/users/" + handle;
     var query = "select * from json where url = '" + url + "'";
     var yql   = "https://query.yahooapis.com/v1/public/yql?format=json&q=" + encodeURIComponent(query);
@@ -54,21 +90,7 @@ function getAOJ(){
               }
 
               console.log(aoj_ac);
-
-              var cal_aoj = new CalHeatMap();
-              cal_aoj.init({
-                  itemSelector: '#aoj-heatmap',
-                  domainLabelFormat: '%Y-%m',
-                  start: new Date(now.getFullYear(), now.getMonth() - 11),
-                  cellSize: size,
-                  range: 12,
-                  domain: "month",
-                  domainGutter: 5,
-                  data: aoj_ac,
-                  legendColors: ["#efefef", "gold"],
-                  legend: [1, 3, 5]
-              });
-
+              cal_aoj.update(aoj_ac);
 
 	      }).fail(function(data){
             alert("Failed(AOJ)");
@@ -77,9 +99,9 @@ function getAOJ(){
 }
 
 function getAtCoder(){
-    //var handle = document.getElementById("handle_atcoder").value;
-    var handle = "rika0384";
-        console.log(handle);
+    var handle = document.getElementById("handle_atcoder").value;
+    //var handle = "rika0384";
+    console.log(handle);
     solved_atcoder = 0;
     var url = "https://kenkoooo.com/atcoder/atcoder-api/results?user=" + handle;
     var query = "select * from json where url = '" + url + "'";
@@ -113,20 +135,7 @@ function getAtCoder(){
     	          }
               }
               console.log(atcoder_ac);
-              var cal_atcoder = new CalHeatMap();
-              cal_atcoder.init({
-                  itemSelector: '#atcoder-heatmap',
-                  domainLabelFormat: '%Y-%m',
-                  start: new Date(now.getFullYear(), now.getMonth() - 11),
-                  cellSize: size,
-                  range: 12,
-                  domain: "month",
-                  domainGutter: 5,
-                  data: atcoder_ac,
-                  legendColors: ["#efefef", "deeppink"],
-                  legend: [1, 3, 5]
-              });
-
+              cal_atcoder.update(atcoder_ac);
 
 
 	      }).fail(function(data){
@@ -136,9 +145,9 @@ function getAtCoder(){
 }
 
 function getCodeForces(){
-    //var handle = document.getElementById("handle_codeforces").value;
-    var handle = "rika0384";
-        console.log(handle);
+    var handle = document.getElementById("handle_codeforces").value;
+    //var handle = "rika0384";
+    console.log(handle);
     var url = "https://codeforces.com/api/user.status?handle=" + handle;
     var query = "select * from json where url = '" + url + "'";
     var yql   = "https://query.yahooapis.com/v1/public/yql?format=json&q=" + encodeURIComponent(query);
@@ -175,22 +184,7 @@ function getCodeForces(){
                     console.log(codeforces_ac);
                     console.log(solved_codeforces);
                 }
-
-
-                var cal_codeforces = new CalHeatMap();
-                cal_codeforces.init({
-                    itemSelector: '#codeforces-heatmap',
-                    domainLabelFormat: '%Y-%m',
-                    start: new Date(now.getFullYear(), now.getMonth() - 11),
-                    cellSize: size,
-                    range: 12,
-                    domain: "month",
-                    domainGutter: 5,
-                    data: codeforces_ac,
-                    legendColors: ["#efefef", "navy"],
-                    legend: [1, 3, 5]
-                });
-
+                cal_codeforces.update(codeforces_ac);
 
 	      }).fail(function(data){
 	          alert("Failed(CF)");
