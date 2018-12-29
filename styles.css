@@ -24,8 +24,8 @@ body{
     width: 300px;
     margin: auto;
 }
-.container{
-    padding: 10px;
+.box{
+    padding: 20px;
 }
 .atcoder{
     background-color: snow;
@@ -41,8 +41,9 @@ body{
 }
 .heatmap{
     background-color: white;
-    margin: 10px;
-    padding: 10px;
+    margin: 20px;
+    padding: 20px;
+    overflow-x: scroll;
 }
 #footer{
     background-color: aliceblue;
