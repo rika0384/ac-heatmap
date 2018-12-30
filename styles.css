@@ -27,8 +27,7 @@ body{
 .info{
     font-size: 20px;
     width: 300px;
-    margin: auto;
-    padding: 0;
+    margin: 10px;
 }
 .id, .ac{
     background-color: white;
