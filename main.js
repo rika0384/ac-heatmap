@@ -48,19 +48,50 @@ var now;
         legend: [1, 3, 5]
     });
 
+    var result = {};
+    if(1 < window.location.search.length) {
+        var query = window.location.search.substring(1);
+        var parameters = query.split('&');
+        for(var i = 0; i < parameters.length; i++) {
+            var element = parameters[i].split('=');
+            var paramName  = decodeURIComponent(element[0]);
+            var paramValue = decodeURIComponent(element[1]);
+            result[paramName] = paramValue;
+        }
+    }
+
+    //console.log(result["handle_codeforces"]);
+    //console.log(result["handle_atcoder"]);
+    //console.log(result["handle_aoj"]);
+
+    if(result["handle_codeforces"])
+	      document.getElementById("handle_codeforces").value = result["handle_codeforces"];
+    if(result["handle_atcoder"])
+	      document.getElementById("handle_atcoder").value = result["handle_atcoder"];
+    if(result["handle_aoj"])
+	      document.getElementById("handle_aoj").value = result["handle_aoj"];
+
+    getData();
 
 })();
 
 function getData(){
-    getAOJ();
-    getAtCoder();
-    getCodeForces();
+
+    var handle_aoj = document.getElementById("handle_aoj").value;
+    var handle_atcoder = document.getElementById("handle_atcoder").value;
+    var handle_codeforces = document.getElementById("handle_codeforces").value;
+    var str = "handle_atcoder=" + handle_atcoder + "&handle_codeforces=" + handle_codeforces + "&handle_aoj=" + handle_aoj;
+    history.replaceState('', '', `?${str}`);
+
+    getAOJ(handle_aoj);
+    getAtCoder(handle_atcoder);
+    getCodeForces(handle_codeforces);
 }
 
-function getAOJ(){
-    var handle = document.getElementById("handle_aoj").value;
+function getAOJ(handle){
+    //var handle = document.getElementById("handle_aoj").value;
     //var handle = "is0384er";
-    console.log(handle);
+    //console.log(handle);
     var url = "https://judgeapi.u-aizu.ac.jp/solutions/users/" + handle;
     var query = "select * from json where url = '" + url + "'";
     var yql   = "https://query.yahooapis.com/v1/public/yql?format=json&q=" + encodeURIComponent(query);
@@ -89,7 +120,7 @@ function getAOJ(){
                   }
               }
 
-              console.log(aoj_ac);
+              //console.log(aoj_ac);
               cal_aoj.update(aoj_ac);
 
 	      }).fail(function(data){
@@ -98,10 +129,10 @@ function getAOJ(){
 	      });
 }
 
-function getAtCoder(){
-    var handle = document.getElementById("handle_atcoder").value;
+function getAtCoder(handle){
+    //var handle = document.getElementById("handle_atcoder").value;
     //var handle = "rika0384";
-    console.log(handle);
+    //console.log(handle);
     solved_atcoder = 0;
     var url = "https://kenkoooo.com/atcoder/atcoder-api/results?user=" + handle;
     var query = "select * from json where url = '" + url + "'";
@@ -120,7 +151,7 @@ function getAtCoder(){
     	          var json = data.query.results.json.json;
 
                   console.log(data);
-                  console.log(json);
+                  //console.log(json);
 
                   var problems = {};
     	          solved_atcoder = 0;
@@ -134,7 +165,7 @@ function getAtCoder(){
     		            }
     	          }
               }
-              console.log(atcoder_ac);
+              //console.log(atcoder_ac);
               cal_atcoder.update(atcoder_ac);
 
 
@@ -144,10 +175,10 @@ function getAtCoder(){
 	      });
 }
 
-function getCodeForces(){
-    var handle = document.getElementById("handle_codeforces").value;
+function getCodeForces(handle){
+    //var handle = document.getElementById("handle_codeforces").value;
     //var handle = "rika0384";
-    console.log(handle);
+    //console.log(handle);
     var url = "https://codeforces.com/api/user.status?handle=" + handle;
     var query = "select * from json where url = '" + url + "'";
     var yql   = "https://query.yahooapis.com/v1/public/yql?format=json&q=" + encodeURIComponent(query);
@@ -181,8 +212,8 @@ function getCodeForces(){
                                codeforces_ac[json[i].creationTimeSeconds] = 1;
                     	}
                     }
-                    console.log(codeforces_ac);
-                    console.log(solved_codeforces);
+                    //console.log(codeforces_ac);
+                    //console.log(solved_codeforces);
                 }
                 cal_codeforces.update(codeforces_ac);
 
