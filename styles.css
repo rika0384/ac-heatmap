@@ -5,7 +5,7 @@ body{
 .title{
     font-size: 100px;
     text-align: center;
-    color: green;
+    color: limegreen;
 }
 .input{
     width: 400px;
@@ -23,6 +23,18 @@ body{
 .atcoder-title, .codeforces-title, .aoj-title{
     width: 300px;
     margin: auto;
+}
+.info{
+    font-size: 20px;
+    width: 300px;
+    margin: auto;
+    padding: 0;
+}
+.id, .ac{
+    background-color: white;
+}
+.id-title, .ac-title{
+    text-align: center;
 }
 .box{
     padding: 20px;
@@ -44,6 +56,10 @@ body{
     margin: 20px;
     padding: 20px;
     overflow-x: scroll;
+}
+p{
+    width: 350px;
+    margin: auto;
 }
 #footer{
     background-color: aliceblue;
