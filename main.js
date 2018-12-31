@@ -198,7 +198,7 @@ function getCodeForces(handle){
                             if(problems[prob.contestId][prob.name] == undefined){
                                    problems[prob.contestId][prob.name] = 1;
                                    solved += 1;
-                                   codeforces_ac[json[i].creationTimeSeconds - 32400] = 1;
+                                   codeforces_ac[json[i].creationTimeSeconds] = 1;
                     		}
                     	}else{
                     	       problems[prob.contestId] = {};
