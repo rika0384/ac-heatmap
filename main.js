@@ -1,10 +1,29 @@
 var size = 13;
-var cal_aoj,cal_atcoder,cal_codeforces;
+var cal_aoj,cal_atcoder,cal_codeforces,cal_all;
 var now;
+var query_time;
+var count = 0;
+var all_solved = 0;
+var all_new_ac = 0;
+var all_ac = {};
+var new_time = 1546268400;//2019/1/1
 
 (function(){
     'use strict';
     now = new Date();
+
+    cal_all = new CalHeatMap();
+	    cal_all.init({
+	        itemSelector: '#all-heatmap',
+	        domainLabelFormat: '%Y-%m',
+	        start: new Date(now.getFullYear(), now.getMonth() - 11),
+	        cellSize: size,
+	        range: 12,
+	        domain: "month",
+	        domainGutter: 5,
+	        legend: [1, 3, 5]
+	    });
+
     cal_aoj = new CalHeatMap();
     cal_aoj.init({
         itemSelector: '#aoj-heatmap',
@@ -71,6 +90,14 @@ var now;
 
 function getData(){
 
+    now = new Date();
+    query_time = Math.floor(now/300);
+    count = 0;
+    all_solved = 0;
+    all_new_ac = 0;
+    all_ac = {};
+
+
     var handle_aoj = document.getElementById("handle_aoj").value;
     var handle_atcoder = document.getElementById("handle_atcoder").value;
     var handle_codeforces = document.getElementById("handle_codeforces").value;
@@ -87,6 +114,7 @@ function getAOJ(handle){
     //var handle = "is0384er";
     //console.log(handle);
     var solved = 0;
+    var new_ac = 0;
     var url = "https://judgeapi.u-aizu.ac.jp/solutions/users/" + handle;
     var query = "select * from json where url = '" + url + "'";
     var yql   = "https://query.yahooapis.com/v1/public/yql?format=json&q=" + encodeURIComponent(query);
@@ -110,14 +138,27 @@ function getAOJ(handle){
                             problems[prob] = 1;
                             solved += 1;
                             aoj_ac[(json[i].judgeDate/1000)] = 1;
+                            all_ac[(json[i].judgeDate/1000)] = 1;
+	                        if(Number(json[i].judgeDate/1000) >= new_time){
+                                new_ac++;
+                            }
                         }
                   }
               }
 
               console.log(solved);
               document.getElementById("aoj_id").textContent = handle;
-              document.getElementById("aoj_solved").textContent = solved + "AC";
+              document.getElementById("aoj_solved").textContent =  solved + "AC（" + new_ac + "AC）";
               cal_aoj.update(aoj_ac);
+
+              all_solved += solved;
+	          all_new_ac += new_ac;
+	          count++;
+	          if(count == 3){
+                  cal_all.update(all_ac);
+                  document.getElementById("all_solved").textContent = all_solved + "AC（" + all_new_ac + "AC）";
+	          }
+
 
 	      }).fail(function(data){
             alert("Failed(AOJ)");
@@ -130,6 +171,7 @@ function getAtCoder(handle){
     //var handle = "rika0384";
     //console.log(handle);
     var solved = 0;
+    var new_ac = 0;
     var url = "https://kenkoooo.com/atcoder/atcoder-api/results?user=" + handle;
     var query = "select * from json where url = '" + url + "'";
     var yql   = "https://query.yahooapis.com/v1/public/yql?format=json&q=" + encodeURIComponent(query);
@@ -156,13 +198,26 @@ function getAtCoder(handle){
     		                problems[prob] = 1;
     		                solved += 1;
                             atcoder_ac[json[i].epoch_second] = 1;
+                            all_ac[json[i].epoch_second] = 1;
+	                        if(Number(json[i].epoch_second) >= new_time){
+                                new_ac++;
+                            }
     		            }
     	          }
               }
               console.log(solved);
               document.getElementById("atcoder_id").textContent = handle;
-              document.getElementById("atcoder_solved").textContent = solved + "AC";
+              document.getElementById("atcoder_solved").textContent = solved +"AC（" + new_ac+ "AC）";
               cal_atcoder.update(atcoder_ac);
+
+              all_solved += solved;
+	          all_new_ac += new_ac;
+	          count++;
+	          if(count == 3){
+                  cal_all.update(all_ac);
+                  document.getElementById("all_solved").textContent = all_solved + "AC（" + all_new_ac + "AC）";
+              }
+
 
 	      }).fail(function(data){
 		        alert("Failed(AC)");
@@ -175,6 +230,7 @@ function getCodeForces(handle){
     //var handle = "rika0384";
     //console.log(handle);
     var solved = 0;
+    var new_ac = 0;
     var url = "https://codeforces.com/api/user.status?handle=" + handle;
     var query = "select * from json where url = '" + url + "'";
     var yql   = "https://query.yahooapis.com/v1/public/yql?format=json&q=" + encodeURIComponent(query);
@@ -199,20 +255,36 @@ function getCodeForces(handle){
                                    problems[prob.contestId][prob.name] = 1;
                                    solved += 1;
                                    codeforces_ac[json[i].creationTimeSeconds] = 1;
+                                   all_ac[json[i].creationTimeSeconds] = 1;
+	                               if(Number(json[i].creationTimeSeconds) >= new_time){
+                                       new_ac++;
+                                   }
                     		}
                     	}else{
                     	       problems[prob.contestId] = {};
                     		   problems[prob.contestId][prob.name] = 1;
                     		   solved += 1;
                                codeforces_ac[json[i].creationTimeSeconds] = 1;
+                               all_ac[json[i].creationTimeSeconds] = 1;
+	                           if(Number(json[i].creationTimeSeconds) >= new_time){
+                                   new_ac++;
+                               }
                     	}
                     }
                     //console.log(codeforces_ac);
                     console.log(solved);
                 }
                 document.getElementById("codeforces_id").textContent = handle;
-                document.getElementById("codeforces_solved").textContent = solved + "AC";
+                document.getElementById("codeforces_solved").textContent = solved + "AC（" + new_ac + "AC）";
                 cal_codeforces.update(codeforces_ac);
+
+                all_solved += solved;
+	            all_new_ac += new_ac;
+	            count++;
+	            if(count == 3){
+                    cal_all.update(all_ac);
+                    document.getElementById("all_solved").textContent = all_solved + "AC（" + all_new_ac + "AC）";
+                }
 
 	      }).fail(function(data){
 	          alert("Failed(CF)");

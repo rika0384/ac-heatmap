@@ -36,14 +36,36 @@
             <button type="submit" onclick="getData()">send</button>
     </div>
 
+
+    <div class="box all">
+	        <div class="all-title">All</div>
+	        <div class="info container">
+	            <div class="row">
+	                <div class="col-md-3"></div>
+	                <div class="col-md-3 ac-title"> unique AC :</div>
+	                <div class="col-md-3 ac" id="all_solved"></div>
+	            </div>
+	        </div>
+	        <div class="heatmap" id="all-heatmap"></div>
+	    </div>
+
+
     <div class="box atcoder">
         <div class="atcoder-title">AtCoder</div>
         <div class="info container">
             <div class="row">
-                <div class="col-md-2 id-title"> ID :</div>
-                <div class="col-md-4 id" id="atcoder_id"></div>
-                <div class="col-md-3 ac-title"> unique AC :</div>
-                <div class="col-md-2 ac" id="atcoder_solved"></div>
+                <div class="col-md-6 container">
+                    <div class="row">
+                        <div class="col-md-3 id-title"> ID :</div>
+                        <div class="col-md-8 id" id="atcoder_id"></div>
+                    </div>
+                </div>
+                <div class="col-md-6 container">
+                    <div class="row">
+                        <div class="col-md-4 ac-title"> unique AC :</div>
+                        <div class="col-md-7 ac" id="atcoder_solved"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="heatmap" id="atcoder-heatmap"></div>
@@ -53,10 +75,18 @@
         <div class="codeforces-title">codeforces</div>
         <div class="info container">
             <div class="row">
-                <div class="col-md-2 id-title"> ID :</div>
-                <div class="col-md-4 id" id="codeforces_id"></div>
-                <div class="col-md-3 ac-title"> unique AC :</div>
-                <div class="col-md-2 ac" id="codeforces_solved"></div>
+                <div class="col-md-6 container">
+                    <div class="row">
+                        <div class="col-md-3 id-title"> ID :</div>
+                        <div class="col-md-8 id" id="codeforces_id"></div>
+                    </div>
+                </div>
+                <div class="col-md-6 container">
+                    <div class="row">
+                        <div class="col-md-4 ac-title"> unique AC :</div>
+                        <div class="col-md-7 ac" id="codeforces_solved"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="heatmap" id="codeforces-heatmap"></div>
@@ -66,10 +96,18 @@
         <div class="aoj-title">AOJ</div>
         <div class="info container">
             <div class="row">
-                <div class="col-md-2 id-title"> ID :</div>
-                <div class="col-md-4 id" id="aoj_id"></div>
-                <div class="col-md-3 ac-title"> unique AC :</div>
-                <div class="col-md-2 ac" id="aoj_solved"></div>
+                <div class="col-md-6 container">
+                    <div class="row">
+                        <div class="col-md-3 id-title"> ID :</div>
+                        <div class="col-md-8 id" id="aoj_id"></div>
+                    </div>
+                </div>
+                <div class="col-md-6 container">
+                    <div class="row">
+                        <div class="col-md-4 ac-title"> unique AC :</div>
+                        <div class="col-md-7 ac" id="aoj_solved"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="heatmap" id="aoj-heatmap"></div>
