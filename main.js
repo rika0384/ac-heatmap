@@ -152,11 +152,17 @@ function getData(){
 
 
 function getAOJ(handle) {
+
+    var aoj_ac = {};
+    var solved = 0;
+    var new_ac = 0;
+
+    document.getElementById("aoj_id").textContent = handle;
+    document.getElementById("aoj_solved").textContent = solved + "AC（" + new_ac + "AC）";
+    cal_aoj.update(aoj_ac);
+
     aoj.api.solutions.findAllByUserId(handle).then(function(solutions) {
         let problems = new Set();
-        var aoj_ac = {};
-        var solved = 0;
-        var new_ac = 0;
         for (let solution of solutions) {
             if (problems.has(solution.problemId)) continue;
             problems.add(solution.problemId);
