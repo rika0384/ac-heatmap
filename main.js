@@ -7,6 +7,48 @@ var all_new_ac = 0;
 var all_ac = {};
 var new_time = 1546268400;//2019/1/1
 
+//
+let aoj = {};
+aoj.api = {};
+
+aoj.api.baseUrl = 'https://judgeapi.u-aizu.ac.jp';
+
+aoj.api.request = (url, params) =>
+  fetch(`${url}?${$.param(Object.assign({ _timestamp: +new Date() }, params))}`)
+    .then(x => x.json());
+
+aoj.api.users = {};
+
+aoj.api.users.findById = id =>
+  aoj.api.request(`${aoj.api.baseUrl}/users/${id}`);
+
+aoj.api.solutions = {};
+
+aoj.api.solutions.findByUserId = (userId, page) =>
+  aoj.api.request(`${aoj.api.baseUrl}/solutions/users/${userId}`, { page });
+
+aoj.api.solutions.findAllByUserId = userId =>
+  new Promise((resolve, reject) => {
+    let allSolutions = [];
+    let page = 0;
+    let tryUnlessEmpty = () => {
+      aoj.api.solutions.findByUserId(userId, page).then(nextSolutions => {
+        if (nextSolutions.length === 0) {
+          allSolutions.sort((a, b) => a.submissionDate - b.submissionDate);
+          resolve(allSolutions);
+          return;
+        }
+        allSolutions = allSolutions.concat(nextSolutions);
+        page++;
+        tryUnlessEmpty();
+      });
+    };
+    tryUnlessEmpty();
+  });
+//
+
+
+
 (function(){
     'use strict';
     now = new Date();
@@ -32,7 +74,7 @@ var new_time = 1546268400;//2019/1/1
         range: 12,
         domain: "month",
         domainGutter: 5,
-        legendColors: ["#efefef", "gold"],
+        //legendColors: ["#efefef", "gold"],
         legend: [1, 3, 5]
     });
     cal_atcoder = new CalHeatMap();
@@ -44,7 +86,7 @@ var new_time = 1546268400;//2019/1/1
         range: 12,
         domain: "month",
         domainGutter: 5,
-        legendColors: ["#efefef", "deeppink"],
+        //legendColors: ["#efefef", "deeppink"],
         legend: [1, 3, 5]
     });
     cal_codeforces = new CalHeatMap();
@@ -56,7 +98,7 @@ var new_time = 1546268400;//2019/1/1
         range: 12,
         domain: "month",
         domainGutter: 5,
-        legendColors: ["#efefef", "navy"],
+        //legendColors: ["#efefef", "navy"],
         legend: [1, 3, 5]
     });
 
@@ -91,7 +133,6 @@ function getData(){
 
     now = new Date();
     query_time = Math.floor(now/300);
-    count = 0;
     all_solved = 0;
     all_new_ac = 0;
     all_ac = {};
@@ -108,50 +149,34 @@ function getData(){
     getCodeForces(handle_codeforces);
 }
 
-function getAOJ(handle){
-    //var handle = document.getElementById("handle_aoj").value;
-    //var handle = "is0384er";
-    //console.log(handle);
-    var solved = 0;
-    var new_ac = 0;
-    var aoj_ac = {};
-    var url = "https://judgeapi.u-aizu.ac.jp/solutions/users/" + handle + "?timestamp=" + query_time;
-
-    document.getElementById("aoj_id").textContent = handle;
-    document.getElementById("aoj_solved").textContent = solved + "AC（" + new_ac + "AC）";
-    cal_aoj.update(aoj_ac);
 
 
-        fetch(url).then(function(response) {
-                return response.json();
-            }).then(function(json) {
-                //console.log(data);
-                //var json = data.query.results.json.json;
-                console.log(json);
-                var problems = {};
-                if(json != undefined){
-                    for(var i = 0; i < json.length; i++){
-                          var prob = json[i].problemId;
-                          if(problems[prob] == undefined){
-                              problems[prob] = 1;
-                              solved += 1;
-                              aoj_ac[(json[i].judgeDate/1000)] = 1;
-                              all_ac[(json[i].judgeDate/1000)] = 1;
-                              if(Number(json[i].judgeDate/1000) >= new_time)new_ac++;
-                          }
-                    }
-                }
+function getAOJ(handle) {
+    aoj.api.solutions.findAllByUserId(handle).then(function(solutions) {
+        let problems = new Set();
+        var aoj_ac = {};
+        var solved = 0;
+        var new_ac = 0;
+        for (let solution of solutions) {
+            if (problems.has(solution.problemId)) continue;
+            problems.add(solution.problemId);
+            solved += 1;
+            aoj_ac[(solution.judgeDate/1000)] = 1;
+            all_ac[(solution.judgeDate/1000)] = 1;
+            if(Number(solution.judgeDate/1000) >= new_time)new_ac++;
+        }
 
-                console.log(solved);
-                document.getElementById("aoj_id").textContent = handle;
-                document.getElementById("aoj_solved").textContent = solved + "AC（" + new_ac + "AC）";
-                cal_aoj.update(aoj_ac);
-                all_solved += solved;
-                all_new_ac += new_ac;
-                cal_all.update(all_ac);
-                document.getElementById("all_solved").textContent = all_solved + "AC（" + all_new_ac + "AC）";
+        console.log(solved);
+        document.getElementById("aoj_id").textContent = handle;
+        document.getElementById("aoj_solved").textContent = solved + "AC（" + new_ac + "AC）";
+        cal_aoj.update(aoj_ac);
+        all_solved += solved;
+        all_new_ac += new_ac;
 
-            });
+        cal_all.update(all_ac);
+        document.getElementById("all_solved").textContent = all_solved + "AC（" + all_new_ac + "AC）";
+
+    });
 
 }
 
