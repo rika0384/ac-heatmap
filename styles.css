@@ -15,32 +15,53 @@ body{
     width:100px;
     margin: auto;
 }
-.atcoder, .codeforces, .aoj, .all{
+.atcoder, .codeforces, .aoj, .yukicoder, .all{
     text-align: center;
     font-size: 40px;
     margin: 50px;
+    padding: 20px;
 }
-.atcoder-title, .codeforces-title, .aoj-title, .all-title{
+.today{
+    text-align: center;
+    font-size: 40px;
+    width: 55%;
+    margin: auto;
+    padding: 20px;
+}
+
+.atcoder-title, .codeforces-title, .aoj-title, .yukicoder-title, .all-title{
+    text-align: center;
     width: 300px;
     margin: auto;
+}
+.today-title{
+    text-align: center;
+    width: 200px;
+    margin: auto;
+}
+.ac-box{
+    margin: 2px;
 }
 .info{
     font-size: 20px;
     width: 300px;
     margin: 10px;
 }
+
 .id, .ac{
     background-color: white;
 }
 .id-title, .ac-title{
     text-align: center;
 }
+.today{
+    background-color: lavender;
+}
 .box{
-    padding: 20px;
-    box-shadow: 2px 2px 4px;
+    box-shadow: 3px 3px 4px;
 }
 .all{
-	background-color: #deffcc;
+    background-color: #deffcc;
 }
 .atcoder{
     background-color: lavenderblush;
@@ -50,6 +71,9 @@ body{
 }
 .aoj{
     background-color: lightyellow;
+}
+.yukicoder{
+    background-color: tan;
 }
 .cal-heatmap-container{
     margin: auto;
