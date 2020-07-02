@@ -59,7 +59,8 @@ aoj.api.solutions.findAllByUserId = userId =>
 (function(){
     'use strict';
     now = new Date();
-
+    new_time = (new Date(now.getFullYear(), 0, 1, 0, 0, 0)).getTime()/1000;
+    console.log(new_time);
     cal_all = new CalHeatMap();
     cal_all.init({
         itemSelector: '#all-heatmap',
@@ -363,7 +364,7 @@ function getYukicoder(handle){
                 document.getElementById("today_codeforces").textContent = today_codeforces + "AC";
                 document.getElementById("today_yukicoder").textContent = today_yukicoder + "AC";
                 document.getElementById("today_aoj").textContent = today_aoj + "AC";
-                
+
         });
 
 }
